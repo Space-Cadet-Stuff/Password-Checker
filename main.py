@@ -13,11 +13,17 @@ def checkpassword(event):
     symbols = set('!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
     
     special_characters = 0
+
+    digit_characters = 0
     
     for char in password:
         if char in symbols:
             special_characters += 1
-            
+    
+    for char in password:
+        if char.isdigit():
+            digit_characters += 1
+
     if len(password) < 8:
         len_score = 0
     elif len(password) == 8:
@@ -47,7 +53,15 @@ def checkpassword(event):
     elif special_characters >= 2:
         symbol_score = 15
     password_strength += symbol_score
-    
+
+    if digit_characters < 1:
+        digit_score = 0
+    elif digit_characters == 1:
+        digit_score = 5
+    elif digit_characters >= 2:
+        digit_score = 15
+    password_strength += digit_score
+
     pwd_strength.value = password_strength
     
 
