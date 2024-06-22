@@ -1,0 +1,22 @@
+passwordbreached = False
+
+def checkbreach():
+    global password
+    global passwordbreached
+    with open('top500pwd.txt', 'r') as file:
+        for line in file:
+            if password == line.strip():
+                return True
+    print(passwordbreached)
+    return passwordbreached
+
+password = input("Please Enter Password: ")
+
+checkbreach()
+
+if passwordbreached == True:
+    print("Your Password Has Been Breached!")
+elif passwordbreached == False:
+    print("Your Password is Secure!")
+else:
+    print("Error!")
