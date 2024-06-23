@@ -15,6 +15,10 @@ def checkpassword(event):
     special_characters = 0
 
     digit_characters = 0
+
+    upper_characters = 0
+
+    lower_characters = 0
     
     for char in password:
         if char in symbols:
@@ -23,6 +27,14 @@ def checkpassword(event):
     for char in password:
         if char.isdigit():
             digit_characters += 1
+    
+    for char in password:
+        if char.isupper():
+            upper_characters += 1
+    
+    for char in password:
+        if char.islower():
+            lower_characters += 1
 
     if len(password) < 8:
         len_score = 0
@@ -62,8 +74,24 @@ def checkpassword(event):
         digit_score = 15
     password_strength += digit_score
 
+    if upper_characters < 1:
+        upper_score = 0
+    elif upper_characters == 1:
+        upper_score = 5
+    elif upper_characters >= 2:
+        upper_score = 10
+    password_strength += upper_score
+
+    if lower_characters < 1:
+        lower_score = 0
+    elif lower_characters == 1:
+        lower_score = 5
+    elif lower_characters >= 2:
+        lower_score = 10
+    password_strength += lower_score
+
+
     pwd_strength.value = password_strength
-    
 
 def showpassword(event):
     pwd_input.toggle()
