@@ -10,21 +10,7 @@ A simple password checking application developed in python using GooeyPie for a 
 
 ## Installation
 
-Install my-project with npm
-
-GooeyPie:
-
-    pip install gooeypie
-    pip3 install gooeypie
-
-PYHIBP:
-
-    pip install pyhibp
-    pip3 install pyhibp
-
-## Installation
-
-Install my-project with npm
+This program requires the GooeyPie and PYHIBP libraries to tun. Open a new terminal and run these commands (pip for windows, pip3 for mac), before you run the program
 
 GooeyPie:
 
