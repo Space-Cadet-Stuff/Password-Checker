@@ -1,9 +1,10 @@
 import gooeypie as gp
+import pyhibp
+from pyhibp import pwnedpasswords as pw
 
+pyhibp.set_user_agent(ua="Fishlock (A password checking application)")
 
 def checkpassword(event):
-    global password_strength
-
     password_strength = 0
     
     password = pwd_input.text
@@ -90,8 +91,14 @@ def checkpassword(event):
         lower_score = 10
     password_strength += lower_score
 
-
     pwd_strength.value = password_strength
+
+def checkpwn(event):
+    password = pwd_input.text
+    if password != "":
+        resp = pw.is_password_breached(password)
+        if resp:
+            app.alert('Breach', 'Warning! This password has been breached {0} time(s) before'.format(resp), 'warning')
 
 def showpassword(event):
     pwd_input.toggle()
@@ -99,12 +106,13 @@ def showpassword(event):
 app = gp.GooeyPieApp('Password Checker')
 app.width = 400
 app.height = 400
-app.set_grid(5, 3)
+app.set_grid(6, 3)
 app.set_icon("appicon.ico")
 
 headline = gp.StyleLabel(app, 'Fishlock')
 headline.font_size = 40
 headline.font_name = "Segoe UI Black"
+logo = gp.Image(app, 'appicon.png')
 
 pwd_strength = gp.Progressbar(app)
 pwd_strength.width = 550
@@ -114,6 +122,8 @@ pwd_input = gp.Secret(app)
 pwd_input.add_event_listener('change', checkpassword)
 show_pwd = gp.Checkbox(app, "Show Password")
 show_pwd.add_event_listener('change', showpassword)
+checkpwnbtn = gp.Button(app, 'Check for Breach', checkpwn)
+checkpwnbtn.width = 90
 
 possible_additions_label = gp.StyleLabel(app, 'For A Higher Score:')
 possible_additions_label.font_size = 15
@@ -123,14 +133,14 @@ possible_additions = gp.Textbox(app)
 possible_additions.width = 90
 possible_additions.disabled = True
 
-app.add(headline, 1, 1, column_span=3)
+app.add(headline, 1, 2, column_span=2)
+app.add(logo, 1, 1, align='right')
 app.add(prompt, 2, 1)
 app.add(pwd_input, 2, 2, fill=True)
 app.add(show_pwd, 2, 3)
 app.add(pwd_strength, 3, 1, column_span=3)
-app.add(possible_additions_label, 4, 1, column_span=3)
-app.add(possible_additions,5, 1, column_span=3)
+app.add(checkpwnbtn, 4, 1, column_span=3)
+app.add(possible_additions_label, 5, 1, column_span=3)
+app.add(possible_additions,6, 1, column_span=3)
 
 app.run()
-
-# Test for commit
