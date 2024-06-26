@@ -22,6 +22,10 @@ PYHIBP:
     pip install pyhibp
     pip3 install pyhibp
 
+## Authors
+
+- [@Space-Cadet-Stuff](https://www.github.com/Space-Cadet-Stuff)
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
