@@ -2,6 +2,7 @@ import gooeypie as gp
 import pyhibp
 from pyhibp import pwnedpasswords as pw
 import webbrowser
+import pyperclip as pc
 
 pyhibp.set_user_agent(ua="Fishlock (A password checking application)")
 
@@ -10,19 +11,18 @@ def checkpassword(event):
     
     password = pwd_input.text
     
-    possible_additions.clear()
-    
     symbols = set('!"#$%&\'()*+,-./:;<=>?@[\\]^_`{|}~')
     
     special_characters = 0
 
     digit_characters = 0
-
+    
     upper_characters = 0
 
     lower_characters = 0
     
     possible_additions.disabled = False
+    possible_additions.clear()
     possible_additions.append_line('Follow these suggestions for maximum scoring:')
 
     
@@ -129,6 +129,11 @@ def opengithub(event):
 
 def showmoreinfo(event):
     app.alert("More Infomation", "This application was developed by SpaceCadet for my SEN task 2 in Year 11", 'info')
+
+def copypassword(event):
+    password = pwd_input.text
+    pc.copy(password)
+
 app = gp.GooeyPieApp('Password Checker')
 app.width = 400
 app.height = 400
@@ -140,6 +145,8 @@ linkbox.set_grid(7,3)
 githublink = gp.ImageButton(app, 'github.png', opengithub)
 moreinfo = gp.Button(app, '?', showmoreinfo)
 moreinfo.width = 7
+copytoclipboard = gp.Button(app, 'Copy Password', copypassword)
+copytoclipboard.width = 50
 
 headline = gp.StyleLabel(app, 'Fishlock')
 headline.font_size = 40
@@ -178,5 +185,6 @@ app.add(linkbox, 7, 1, column_span=3, valign='bottom')
 
 linkbox.add(githublink, 7, 1, valign='bottom')
 linkbox.add(moreinfo, 7, 3, valign='bottom', align='right', stretch='True')
+linkbox.add(copytoclipboard, 7, 2, align='center',valign='bottom', stretch='True')
 
 app.run()
