@@ -1,6 +1,7 @@
 import gooeypie as gp
 import pyhibp
 from pyhibp import pwnedpasswords as pw
+import webbrowser
 
 pyhibp.set_user_agent(ua="Fishlock (A password checking application)")
 
@@ -103,11 +104,22 @@ def checkpwn(event):
 def showpassword(event):
     pwd_input.toggle()
 
+def opengithub(event):
+    webbrowser.open('https://github.com/Space-Cadet-Stuff/Password-Checker')
+
+def showmoreinfo(event):
+    app.alert("More Infomation", "This application was developed by SpaceCadet for my SEN task 2 in Year 11", 'info')
 app = gp.GooeyPieApp('Password Checker')
 app.width = 400
 app.height = 400
-app.set_grid(6, 3)
+app.set_grid(7, 3)
 app.set_icon("appicon.ico")
+
+linkbox = gp.Container(app)
+linkbox.set_grid(7,3)
+githublink = gp.ImageButton(app, 'github.png', opengithub)
+moreinfo = gp.Button(app, '?', showmoreinfo)
+moreinfo.width = 7
 
 headline = gp.StyleLabel(app, 'Fishlock')
 headline.font_size = 40
@@ -142,5 +154,9 @@ app.add(pwd_strength, 3, 1, column_span=3)
 app.add(checkpwnbtn, 4, 1, column_span=3)
 app.add(possible_additions_label, 5, 1, column_span=3)
 app.add(possible_additions,6, 1, column_span=3)
+app.add(linkbox, 7, 1, column_span=3, valign='bottom')
+
+linkbox.add(githublink, 7, 1, valign='bottom')
+linkbox.add(moreinfo, 7, 3, valign='bottom', align='right', stretch='True')
 
 app.run()
