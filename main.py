@@ -22,6 +22,10 @@ def checkpassword(event):
 
     lower_characters = 0
     
+    possible_additions.disabled = False
+    possible_additions.append_line('Follow these suggestions for maximum scoring:')
+
+    
     for char in password:
         if char in symbols:
             special_characters += 1
@@ -59,6 +63,9 @@ def checkpassword(event):
     elif len(password) >= 16:
         len_score = 50
     password_strength += len_score
+
+    if len_score < 50:
+        possible_additions.append_line("Try making your password longer")
     
     if special_characters < 1:
         symbol_score = 0
@@ -68,6 +75,9 @@ def checkpassword(event):
         symbol_score = 15
     password_strength += symbol_score
 
+    if symbol_score < 15:
+        possible_additions.append_line("Try adding more symbols")
+
     if digit_characters < 1:
         digit_score = 0
     elif digit_characters == 1:
@@ -75,6 +85,9 @@ def checkpassword(event):
     elif digit_characters >= 2:
         digit_score = 15
     password_strength += digit_score
+
+    if digit_score < 15:
+        possible_additions.append_line("Try adding some more numbers")
 
     if upper_characters < 1:
         upper_score = 0
@@ -84,6 +97,9 @@ def checkpassword(event):
         upper_score = 10
     password_strength += upper_score
 
+    if upper_score < 10:
+        possible_additions.append_line("Try adding some more uppercase letters")
+
     if lower_characters < 1:
         lower_score = 0
     elif lower_characters == 1:
@@ -92,14 +108,18 @@ def checkpassword(event):
         lower_score = 10
     password_strength += lower_score
 
+    if lower_score < 10:
+        possible_additions.append_line("Try addins some lowercase letters")
+
     pwd_strength.value = password_strength
+
+    possible_additions.disabled = True
 
 def checkpwn(event):
     password = pwd_input.text
     if password != "":
         resp = pw.is_password_breached(password)
-        if resp:
-            app.alert('Breach', 'Warning! This password has been breached {0} time(s) before'.format(resp), 'warning')
+        app.alert('Breach', 'Warning! This password has been breached {0} time(s) before'.format(resp), 'warning')
 
 def showpassword(event):
     pwd_input.toggle()
